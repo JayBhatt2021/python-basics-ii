@@ -1,9 +1,14 @@
+from typing import List
+
+
 class Student:
-    """A simple counter for tracking occurrences."""
+    """A class representing a student with test scores."""
 
     def __init__(self, first_name: str, last_name: str) -> None:
-        """Initialize the counter.
+        """Initialize a student with first and last name.
 
+        :param first_name: The first name of the student.
+        :param last_name: The last name of the student.
         :return: None
         """
         self.first_name = first_name
@@ -11,83 +16,97 @@ class Student:
         self.test_scores = []
 
     def __str__(self) -> str:
-        """Initialize the counter.
+        """Return string representation of the student.
 
-        :return: None
+        :return: A formatted string representing the student's data.
         """
         average_score = self.calculate_average_score()
-        properties = [self.first_name, self.last_name,
-                      f"{self.test_scores[0]:.2f}",
-                      f"{self.test_scores[1]:.2f}",
-                      f"{self.test_scores[2]:.2f}",
-                      f"{self.test_scores[3]:.2f}",
-                      f"{self.test_scores[4]:.2f}",
-                      f"{average_score:.2f}",
-                      self.calculate_grade(average_score)]
-        return "\t".join(map(str, properties))
+        return f"{self.first_name}\t{self.last_name}\t" + \
+            "\t".join(f"{score:.2f}" for score in self.test_scores) + \
+            f"\t{average_score:.2f}\t{self.calculate_grade(average_score)}"
 
     def add_test_score(self, test_score: float) -> None:
-        """Increment the counter.
+        """Add a test score to the list of test scores.
 
+        :param test_score: The test score to add.
         :return: None
         """
-        if len(self.test_scores) + 1 < 6:
+        if len(self.test_scores) < 5:
             self.test_scores.append(test_score)
 
     def calculate_average_score(self) -> float:
-        """Increment the counter.
+        """Calculate the average test score of the student.
 
-        :return: None
+        :return: The average test score.
         """
-        test_count = len(self.test_scores)
-        return 0.0 if not test_count else sum(self.test_scores) / test_count
+        return sum(self.test_scores) / len(self.test_scores) \
+            if self.test_scores else 0.0
 
-    def calculate_grade(self, average_score: float) -> str:
-        """Increment the counter.
+    @staticmethod
+    def calculate_grade(average_score: float) -> str:
+        """Calculate the grade based on the average test score.
 
-        :return: None
+        :param average_score: The average test score of the student.
+        :return: The grade corresponding to the average test score.
         """
-        grade = "F"
-
         if average_score >= 90:
-            grade = "A"
+            return "A"
         elif average_score >= 80:
-            grade = "B"
+            return "B"
         elif average_score >= 70:
-            grade = "C"
+            return "C"
         elif average_score >= 60:
-            grade = "D"
+            return "D"
+        else:
+            return "F"
 
-        return grade
 
+def print_student_table(students: List[Student]) -> None:
+    """Print a table of student names, test scores, average, and grade.
 
-def main() -> None:
-    """Simulate 100 coin flips and count the number of heads and tails."""
-    #
-    first_names = ["Jack", "Lisa", "Andy", "Ravi", "Bonny", "Danny", "Sam",
-                   "Robin", "Sun", "Kiran"]
-    last_names = ["Johnson", "Aniston", "Cooper", "Gupta", "Blair", "Clark",
-                  "Kennedy", "Bronson", "Xie", "Patel"]
-    test_one_scores = [85, 80, 78, 92, 23, 60, 77, 93, 79, 85]
-    test_two_scores = [83, 90, 81, 83, 45, 85, 31, 94, 85, 72]
-    test_three_scores = [77, 95, 11, 30, 96, 45, 52, 89, 28, 49]
-    test_four_scores = [91, 93, 90, 69, 38, 39, 74, 77, 93, 75]
-    test_five_scores = [76, 48, 73, 87, 59, 67, 83, 97, 82, 63]
-
-    #
+    :param students: A list of Student objects.
+    :return: None
+    """
     headings = ["F.N.", "L.N.", "Test1", "Test2", "Test3", "Test4", "Test5",
                 "Average", "Grade"]
     print("\t".join(headings))
 
-    #
-    for i in range(len(first_names)):
-        student = Student(first_names[i], last_names[i])
-        student.add_test_score(test_one_scores[i])
-        student.add_test_score(test_two_scores[i])
-        student.add_test_score(test_three_scores[i])
-        student.add_test_score(test_four_scores[i])
-        student.add_test_score(test_five_scores[i])
+    for student in students:
         print(student)
+
+
+def main() -> None:
+    """Prompt user to enter student data and print it in a formatted table.
+
+    :return: None
+    """
+    try:
+        students = []
+
+        while True:
+            first_name = input("Enter the student's first name: ")
+            last_name = input("Enter the student's last name: ")
+            student = Student(first_name, last_name)
+
+            for i in range(1, 6):
+                test_score = float(input(f"Enter test score #{i}: "))
+                student.add_test_score(test_score)
+
+            students.append(student)
+
+            continue_loop = input(
+                "\nDo you want to stop adding students (enter 'yes' or 'no')?: "
+            )
+            if continue_loop.lower() == 'yes':
+                break
+            print()
+
+        print()
+        print_student_table(students)
+    except ValueError:
+        print("\nThe test score must be a float! Exiting program...")
+    except KeyboardInterrupt:
+        print("\n\nProgram ended by user.")
 
 
 if __name__ == "__main__":
