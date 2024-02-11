@@ -22,9 +22,8 @@ def longest_positive_continuous_length(num_list: List[int]) -> int:
 
             length = 0
 
-    # If there was no positive series or the last positive series is the
-    # longest, update longest_length
-    if not longest_length:
+    # If the last positive series is the longest, update the longest length
+    if length > longest_length:
         longest_length = length
 
     return longest_length
@@ -33,7 +32,7 @@ def longest_positive_continuous_length(num_list: List[int]) -> int:
 def main() -> None:
     """Generate two lists of numbers, find the maximum values from each,
     calculate their sum, and determine the length of the longest continuous
-    series of positive numbers.
+    series of positive numbers in each list.
 
     :return: None
     """
