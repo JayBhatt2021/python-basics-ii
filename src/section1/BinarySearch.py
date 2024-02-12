@@ -3,17 +3,19 @@ import random
 
 
 def binary_search(num_list: List[int], key: int) -> int:
-    """Search for a key in a list and print its indices if found.
+    """Search for a key in a sorted list using binary search.
 
-    :param num_list: The list of numbers to search.
+    :param num_list: The list of numbers to search (must be sorted).
     :param key: The value to search for.
-    :return: None
+    :return: The index of the key if found, otherwise the index where it should
+             be inserted to maintain sorted order.
     """
     start = 0
     end = len(num_list) - 1
-    middle = (start + end) // 2
 
     while start <= end:
+        middle = (start + end) // 2
+
         if num_list[middle] == key:
             return middle
         elif num_list[middle] < key:
@@ -21,47 +23,46 @@ def binary_search(num_list: List[int], key: int) -> int:
         else:
             end = middle - 1
 
-        middle = (start + end) // 2
-
-    return -(middle + 1)
+    # If key is not found, return the negative insertion point
+    return -start
 
 
 def main() -> None:
-    """Generate two lists of numbers, search for a user-provided key,
-    and print the indices where the key is found.
+    """Generate two lists of numbers, search for a user-provided key, and print
+    the indices where the key is found.
 
     :return: None
     """
     try:
-        # Prompts user for a value to search for
+        # Prompts the user for a value to search for
         key = int(input("Enter a value to search for: "))
 
-        # Predefined list and search
+        # Predefined List
         predefined_nums = [1, 4, 4, 22, -5, 10, 21, -47, 23]
         predefined_nums.sort()
         print(f"\nPredefined numbers: {predefined_nums}")
         predefined_nums_key_index = binary_search(predefined_nums, key)
-        if predefined_nums_key_index < 0:
-            print(
-                f"{key} is not found. However, it would be inserted on index "
-                f"{-1 * predefined_nums_key_index} to preserve the sorting "
-                f"order."
-            )
+        if predefined_nums_key_index >= 0:
+            print(f"{key} is found at index {predefined_nums_key_index}.")
         else:
-            print(f"{key} is found on index {predefined_nums_key_index}.")
+            insert_index = -predefined_nums_key_index
+            print(
+                f"{key} is not found. It would be inserted at index "
+                f"{insert_index} to maintain sorted order."
+            )
 
-        # Random list and search
-        random_nums = [random.randint(-100, 100) for _ in range(20)]
-        random_nums.sort()
+        # Random List
+        random_nums = sorted([random.randint(-100, 100) for _ in range(20)])
         print(f"\nRandom numbers: {random_nums}")
         random_nums_key_index = binary_search(random_nums, key)
-        if random_nums_key_index < 0:
-            print(
-                f"{key} is not found. However, it would be inserted on index "
-                f"{-1 * random_nums_key_index} to preserve the sorting order."
-            )
+        if random_nums_key_index >= 0:
+            print(f"{key} is found at index {random_nums_key_index}.")
         else:
-            print(f"{key} is found on index {random_nums_key_index}.")
+            insert_index = -random_nums_key_index
+            print(
+                f"{key} is not found. It would be inserted at index "
+                f"{insert_index} to maintain sorted order."
+            )
     except ValueError:
         print("\nInput must be an integer. Exiting program...")
     except KeyboardInterrupt:
