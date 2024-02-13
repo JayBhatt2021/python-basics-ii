@@ -106,7 +106,7 @@ def main() -> None:
     except ValueError:
         print("\nThe test score must be a float! Exiting program...")
     except KeyboardInterrupt:
-        print("\n\nProgram ended by user.")
+        print("\n\nProgram terminated by user.")
 
 
 if __name__ == "__main__":

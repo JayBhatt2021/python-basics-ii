@@ -66,7 +66,7 @@ def main() -> None:
     except ValueError:
         print("\nInput must be an integer. Exiting program...")
     except KeyboardInterrupt:
-        print("\n\nProgram ended by user.")
+        print("\n\nProgram terminated by user.")
 
 
 if __name__ == "__main__":
