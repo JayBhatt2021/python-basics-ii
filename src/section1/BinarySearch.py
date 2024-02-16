@@ -30,8 +30,6 @@ def binary_search(num_list: List[int], key: int) -> int:
 def main() -> None:
     """Generate two lists of numbers, search for a user-provided key, and print
     the indices where the key is found.
-
-    :return: None
     """
     try:
         # Prompts the user for a value to search for

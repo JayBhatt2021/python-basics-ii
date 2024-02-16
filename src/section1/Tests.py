@@ -9,7 +9,6 @@ class Student:
 
         :param first_name: The first name of the student.
         :param last_name: The last name of the student.
-        :return: None
         """
         self.first_name = first_name
         self.last_name = last_name
@@ -29,7 +28,6 @@ class Student:
         """Add a test score to the list of test scores.
 
         :param test_score: The test score to add.
-        :return: None
         """
         if len(self.test_scores) < 5:
             self.test_scores.append(test_score)
@@ -65,7 +63,6 @@ def print_student_table(students: List[Student]) -> None:
     """Print a table of student names, test scores, average, and grade.
 
     :param students: A list of Student objects.
-    :return: None
     """
     headings = ["F.N.", "L.N.", "Test1", "Test2", "Test3", "Test4", "Test5",
                 "Average", "Grade"]
@@ -76,10 +73,7 @@ def print_student_table(students: List[Student]) -> None:
 
 
 def main() -> None:
-    """Prompt user to enter student data and print it in a formatted table.
-
-    :return: None
-    """
+    """Prompt user to enter student data and print it in a formatted table."""
     try:
         students = []
 

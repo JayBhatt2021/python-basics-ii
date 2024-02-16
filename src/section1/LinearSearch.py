@@ -7,7 +7,6 @@ def linear_search(num_list: List[int], key: int) -> None:
 
     :param num_list: The list of numbers to search.
     :param key: The value to search for.
-    :return: None
     """
     key_indices = [i for i, num in enumerate(num_list) if num == key]
 
@@ -20,8 +19,6 @@ def linear_search(num_list: List[int], key: int) -> None:
 def main() -> None:
     """Generate two lists of numbers, search for a user-provided key, and print
     the indices where the key is found.
-
-    :return: None
     """
     try:
         # Prompts user for a value to search for
