@@ -43,8 +43,8 @@ def main() -> None:
     # Finds the max of each list, calculates their sum, and prints them
     predefined_max = max(predefined_nums)
     random_max = max(random_nums)
-    print(f'\nMaximum value in the predefined list: {predefined_max}')
-    print(f'Maximum value in the random list: {random_max}')
+    print(f"\nMaximum value in the predefined list: {predefined_max}")
+    print(f"Maximum value in the random list: {random_max}")
     print(f"Sum of the maximum values: {predefined_max + random_max}")
 
     # Prints the length of the longest continuous series of positive numbers in
