@@ -20,9 +20,11 @@ class Student:
         :return: A formatted string representing the student's data.
         """
         average_score = self.calculate_average_score()
-        return f"{self.first_name}\t{self.last_name}\t" + \
-            "\t".join(f"{score:.2f}" for score in self.test_scores) + \
-            f"\t{average_score:.2f}\t{self.calculate_grade(average_score)}"
+        return (
+            f"{self.first_name}\t{self.last_name}\t"
+            + "\t".join(f"{score:.2f}" for score in self.test_scores)
+            + f"\t{average_score:.2f}\t{self.calculate_grade(average_score)}"
+        )
 
     def add_test_score(self, test_score: float) -> None:
         """Add a test score to the list of test scores.
@@ -37,8 +39,10 @@ class Student:
 
         :return: The average test score.
         """
-        return sum(self.test_scores) / len(self.test_scores) \
-            if self.test_scores else 0.0
+        return (
+            sum(self.test_scores) / len(self.test_scores) if self.test_scores
+            else 0.0
+        )
 
     @staticmethod
     def calculate_grade(average_score: float) -> str:
@@ -64,8 +68,17 @@ def print_student_table(students: List[Student]) -> None:
 
     :param students: A list of Student objects.
     """
-    headings = ["F.N.", "L.N.", "Test1", "Test2", "Test3", "Test4", "Test5",
-                "Average", "Grade"]
+    headings = [
+        "F.N.",
+        "L.N.",
+        "Test1",
+        "Test2",
+        "Test3",
+        "Test4",
+        "Test5",
+        "Average",
+        "Grade",
+    ]
     print("\t".join(headings))
 
     for student in students:
@@ -82,8 +95,9 @@ def main() -> None:
             last_name = input("Enter the student's last name: ")
             student = Student(first_name, last_name)
 
+            print(F"\nEnter the test scores of {first_name} {last_name}.")
             for i in range(1, 6):
-                test_score = float(input(f"Enter test score #{i}: "))
+                test_score = float(input(f"Test score #{i}: "))
                 student.add_test_score(test_score)
 
             students.append(student)
@@ -91,7 +105,7 @@ def main() -> None:
             continue_loop = input(
                 "\nDo you want to stop adding students (enter 'yes' or 'no')?: "
             )
-            if continue_loop.lower() == 'yes':
+            if continue_loop.lower() == "yes":
                 break
             print()
 
