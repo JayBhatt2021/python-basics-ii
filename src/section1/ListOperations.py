@@ -33,8 +33,6 @@ def main() -> None:
     """Generate two lists of numbers, find the maximum values from each,
     calculate their sum, and determine the length of the longest continuous
     series of positive numbers in each list.
-
-    :return: None
     """
     # Generates two integer lists and prints them
     predefined_nums = [1, 4, 13, 43, -25, 17, 22, -37, 29]
