@@ -1,3 +1,6 @@
+from enum import Enum
+
+
 class Person:
     """A class representing a person."""
 
@@ -27,11 +30,24 @@ class Person:
         )
 
 
+class GradeLevel(Enum):
+    """A class representing a grade level."""
+
+    FRESHMAN = 0
+    """The freshman grade level."""
+
+    SOPHOMORE = 1
+    """The sophomore grade level."""
+
+    JUNIOR = 2
+    """The junior grade level."""
+
+    SENIOR = 3
+    """The senior grade level."""
+
+
 class Student(Person):
     """A class representing a student."""
-
-    # Integer constants representing academic years
-    Freshman, Sophomore, Junior, Senior = range(4)
 
     def __init__(
         self,
@@ -39,7 +55,7 @@ class Student(Person):
         home_address: str,
         phone: str,
         email: str,
-        grade_level: int,
+        grade_level: GradeLevel,
     ) -> None:
         """Initialize a student with personal information and grade level.
 
@@ -57,7 +73,7 @@ class Student(Person):
 
         :return: A string representing the student.
         """
-        return f"{super().__str__()}\nGrade Level: {self.grade_level}"
+        return f"{super().__str__()}\nGrade Level: {self.grade_level.name}"
 
 
 class MyDate:
@@ -230,7 +246,7 @@ def main() -> None:
         "738B Pin Oak Lane, Raleigh, NC 27302",
         "456-555-5678",
         "jane@example.com",
-        Student.Junior
+        GradeLevel.JUNIOR,
     )
 
     employee = Employee(
