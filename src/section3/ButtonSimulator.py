@@ -53,7 +53,7 @@ class ButtonSimulator:
         :return: True if the user wants to stop, False otherwise.
         """
         return input(
-            '\nDo you want to stop pressing buttons ("yes" or "no"): '
+            '\nDo you want to stop pressing buttons ("yes" or "no")?: '
         ).lower() == "yes"
 
 
