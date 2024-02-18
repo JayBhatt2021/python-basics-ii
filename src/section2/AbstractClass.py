@@ -73,7 +73,7 @@ class Octagon(GeometricObject):
 
 def main() -> None:
     """Demonstrate the functionality of the classes."""
-    original_octagon = Octagon(4)
+    original_octagon = Octagon(8)
     print(f"Original Octagon:\n{original_octagon}")
 
     clone_octagon = original_octagon.clone()
