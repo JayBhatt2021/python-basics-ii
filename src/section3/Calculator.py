@@ -15,16 +15,15 @@ class Calculator:
                 number = int(input("Enter a number (1-9): "))
                 if 1 <= number <= 9:
                     self.expression_list.append(str(number))
+                    if (input('\nStop entering numbers ("yes" or "no")?: ')
+                            .lower() == "yes"):
+                        print()
+                        break
+                    print()
                 else:
                     print("\nPlease enter a number in the range [1, 9].")
             except ValueError:
                 print("\nInvalid input. Please enter a valid integer.")
-            else:
-                if (input(
-                        '\nDo you want to stop entering numbers ("yes" or "no")'
-                        '?: '
-                ).lower() == "yes"):
-                    break
 
     def enter_operator(self) -> None:
         """Enter an operator into the calculator."""
@@ -32,6 +31,7 @@ class Calculator:
             operator = input('Enter an operator ("+", "-", "*", or "/"): ')
             if operator in self.OPERATORS:
                 self.expression_list.append(operator)
+                print()
                 break
             else:
                 print("\nPlease enter a valid operator.")
@@ -42,7 +42,7 @@ class Calculator:
             expression_str = "".join(self.expression_list)
             print(
                 f'The result of the expression "{expression_str}" is '
-                f'"{eval(expression_str)}".'
+                f'"{eval(expression_str):.2f}".'
             )
         except Exception as e:
             print(f'An error occurred: "{e}".')
