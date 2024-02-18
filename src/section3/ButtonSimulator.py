@@ -1,5 +1,5 @@
 class ButtonSimulator:
-    """A class representing a simple calculator."""
+    """A class representing a button simulator."""
 
     BUTTONS = [
         "Button #1",
@@ -9,50 +9,63 @@ class ButtonSimulator:
         "Button #5",
         "Button #6",
     ]
-    """A set of arithmetic operators."""
+    """A list of buttons."""
 
     def __init__(self) -> None:
-        """Initialize the calculator.
-
-        :return: None
-        """
+        """Initialize the button simulator."""
         print("Button Simulator:")
 
-    def press_buttons(self) -> None:
-        """Enter numbers into the calculator.
-
-        :return: None
-        """
+    def simulate_button_press(self) -> None:
+        """Simulate pressing buttons."""
         while True:
             try:
-                for i in range(1, 7):
-                    print(f"{i}) {self.BUTTONS[i - 1]}")
-                number = int(input("Press a button (1-6): "))
-                if 1 <= number <= 6:
-                    print(f"\n{self.BUTTONS[number - 1]} was pressed!")
-                else:
-                    print("\nPlease enter a number in the range [1, 6].")
-                    continue
+                self.display_buttons()
+                number = self.get_button_input()
+                print(f"\n{self.BUTTONS[number - 1]} was pressed!")
+                if self.should_stop():
+                    break
             except ValueError:
                 print("\nInvalid input. Please enter a valid integer.")
-            else:
-                if (input("\nDo you want to stop pressing buttons (yes/no): ")
-                        .lower() == "yes"):
-                    break
+
+    def display_buttons(self) -> None:
+        """Display the available buttons."""
+        for i, button in enumerate(self.BUTTONS, start=1):
+            print(f"{i}) {button}")
+
+    @staticmethod
+    def get_button_input() -> int:
+        """Get user input for button press.
+
+        :return: The number of the button to be pressed.
+        """
+        while True:
+            number = int(input("Press a button (1-6): "))
+            if 1 <= number <= 6:
+                break
+            print("\nPlease enter a number in the range [1, 6].")
+
+        return number
+
+    @staticmethod
+    def should_stop() -> bool:
+        """Check if the user wants to stop pressing buttons.
+
+        :return: True if the user wants to stop, False otherwise.
+        """
+        return input(
+            '\nDo you want to stop pressing buttons ("yes" or "no"): '
+        ).lower() == "yes"
 
 
 def main() -> None:
-    """Run the calculator program.
-
-    :return: None
-    """
+    """Run the button simulator program."""
     try:
-        button = ButtonSimulator()
-        button.press_buttons()
+        button_simulator = ButtonSimulator()
+        button_simulator.simulate_button_press()
     except KeyboardInterrupt:
-        print("\n\nProgram ended by user.")
+        print("\n\nProgram terminated by user.")
     except Exception as e:
-        print(f'An unexpected error occurred: "{e}"')
+        print(f'An unexpected error occurred: "{e}".')
 
 
 if __name__ == "__main__":
