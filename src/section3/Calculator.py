@@ -1,103 +1,65 @@
 class Calculator:
-    """An abstract class representing a Vacation."""
+    """A class representing a simple calculator."""
+
+    OPERATORS = {"+", "-", "*", "/"}
+    """A set of arithmetic operators."""
 
     def __init__(self) -> None:
-        """Initialize a vacation with budget and destination.
-
-        :param budget: The budget for the vacation.
-        :param destination: The destination of the vacation.
-        :return: None
-        """
-        self.operator_list = ["+", "-", "*", "/"]
+        """Initialize the calculator."""
         self.expression_list = []
 
-    def enter_number(self) -> None:
-        """Abstract method to calculate how much the vacation is over budget.
-
-        :return: The amount by which the vacation is over budget.
-        """
+    def enter_numbers(self) -> None:
+        """Enter numbers into the calculator."""
         while True:
-            number = int(input("Enter a number (1-9): "))
-            if number < 1 or number > 9:
-                print("\nPlease enter a number in the range [1, 9].")
-                continue
-            self.expression_list.append(str(number))
-
-            stop_entering_numbers = input(
-                "\nDo you want to stop entering numbers (enter 'yes' or 'no'): "
-            )
-            if stop_entering_numbers.lower() == "yes":
-                print()
-                break
+            try:
+                number = int(input("Enter a number (1-9): "))
+                if 1 <= number <= 9:
+                    self.expression_list.append(str(number))
+                else:
+                    print("\nPlease enter a number in the range [1, 9].")
+            except ValueError:
+                print("\nInvalid input. Please enter a valid integer.")
+            else:
+                if (input(
+                        '\nDo you want to stop entering numbers ("yes" or "no")'
+                        '?: '
+                ).lower() == "yes"):
+                    break
 
     def enter_operator(self) -> None:
-        """Abstract method to calculate how much the vacation is over budget.
-
-        :return: The amount by which the vacation is over budget.
-        """
+        """Enter an operator into the calculator."""
         while True:
-            operator = input("Enter an operator (+, -, *, /): ")
-            if operator not in self.operator_list:
+            operator = input('Enter an operator ("+", "-", "*", or "/"): ')
+            if operator in self.OPERATORS:
+                self.expression_list.append(operator)
+                break
+            else:
                 print("\nPlease enter a valid operator.")
-                continue
-            self.expression_list.append(operator)
-            print()
-            break
 
     def calculate_expression(self) -> None:
-        """Abstract method to calculate how much the vacation is over budget.
-
-        :return: The amount by which the vacation is over budget.
-        """
-        expression_str = "".join(self.expression_list)
-
-        operator_index = 1
-        for i, char in enumerate(expression_str):
-            if char in self.operator_list:
-                operator_index = i
-                break
-
-        operator = expression_str[operator_index]
-        operands = expression_str.split(operator)
-        first_operand, second_operand = operands[0], operands[1]
-
-        if operator == "+":
+        """Calculate the expression entered into the calculator."""
+        try:
+            expression_str = "".join(self.expression_list)
             print(
-                f"The sum of {first_operand} and {second_operand} is "
-                f"{int(first_operand) + int(second_operand)}."
+                f'The result of the expression "{expression_str}" is '
+                f'"{eval(expression_str)}".'
             )
-        elif operator == "-":
-            print(
-                f"The difference of {first_operand} and {second_operand} is "
-                f"{int(first_operand) - int(second_operand)}."
-            )
-        elif operator == "*":
-            print(
-                f"The product of {first_operand} and {second_operand} is "
-                f"{int(first_operand) * int(second_operand)}."
-            )
-        else:
-            print(
-                f"The dividend of {first_operand} and {second_operand} is "
-                f"{int(first_operand) / int(second_operand):.2f}."
-            )
+        except Exception as e:
+            print(f'An error occurred: "{e}".')
 
 
 def main() -> None:
-    """Generate two types of vacations, prompt for input, and display details.
-
-    :return: None
-    """
+    """Run the calculator program."""
     try:
         calculator = Calculator()
-        calculator.enter_number()
+        calculator.enter_numbers()
         calculator.enter_operator()
-        calculator.enter_number()
+        calculator.enter_numbers()
         calculator.calculate_expression()
-    except ValueError:
-        print("\nInput must be a valid integer. Exiting program...")
     except KeyboardInterrupt:
-        print("\n\nProgram ended by user.")
+        print("\n\nProgram terminated by user.")
+    except Exception as e:
+        print(f'\nAn unexpected error occurred: "{e}".')
 
 
 if __name__ == "__main__":
