@@ -6,36 +6,34 @@ class GeometricObject(ABC):
     """An abstract class representing a geometric object."""
 
     def __init__(self, side: float) -> None:
-        """Initialize a vacation with budget and destination.
+        """Initialize the geometric object.
 
-        :param budget: The budget for the vacation.
-        :param destination: The destination of the vacation.
+        :param side: The length of a side of the geometric object.
         """
         self.side = side
 
     def __str__(self) -> str:
-        """Return a string representation of the staff member.
+        """Return a string representation of the geometric object.
 
-        :return: A string representing the staff member.
+        :return: A string representing the geometric object.
         """
         return f"Side: {self.side:.2f} units"
 
 
 class Octagon(GeometricObject):
-    """replace this"""
+    """A class representing an octagon."""
 
     def __init__(self, side: float) -> None:
-        """Initialize a vacation with budget and destination.
+        """Initialize the octagon.
 
-        :param budget: The budget for the vacation.
-        :param destination: The destination of the vacation.
+        :param side: The length of a side of the octagon.
         """
         super().__init__(side)
 
     def __str__(self) -> str:
-        """Return a string representation of the staff member.
+        """Return a string representation of the octagon.
 
-        :return: A string representing the staff member.
+        :return: A string representing the octagon.
         """
         return (
             f"{super().__str__()}\nPerimeter: {self.perimeter():.2f} units\n"
@@ -43,42 +41,38 @@ class Octagon(GeometricObject):
         )
 
     def __eq__(self, other: object) -> bool:
-        """
+        """Check if two octagons are equal.
 
-        :param other:
-        :return:
+        :param other: Another object to compare with.
+        :return: True if both objects are octagons with the same side length,
+                 False otherwise.
         """
         return isinstance(other, Octagon) and self.side == other.side
 
     def perimeter(self) -> float:
-        """Initialize a vacation with budget and destination.
+        """Calculate the perimeter of the octagon.
 
-        :param budget: The budget for the vacation.
-        :param destination: The destination of the vacation.
+        :return: The perimeter of the octagon.
         """
         return 8 * self.side
 
     def area(self) -> float:
-        """Initialize a vacation with budget and destination.
+        """Calculate the area of the octagon.
 
-        :param budget: The budget for the vacation.
-        :param destination: The destination of the vacation.
+        :return: The area of the octagon.
         """
         return (2 + 4 / math.sqrt(2)) * self.side ** 2
 
-    def clone(self) -> object:
-        """
+    def clone(self) -> "Octagon":
+        """Create a clone of the octagon.
 
-        :return:
+        :return: A new octagon object with the same side length.
         """
         return Octagon(self.side)
 
 
 def main() -> None:
-    """Demonstrate the functionality of the classes.
-
-    :return: None
-    """
+    """Demonstrate the functionality of the classes."""
     original_octagon = Octagon(4)
     print(f"Original Octagon:\n{original_octagon}")
 
