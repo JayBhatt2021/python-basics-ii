@@ -32,8 +32,7 @@ class ButtonSimulator:
         for i, button in enumerate(self.BUTTONS, start=1):
             print(f"{i}) {button}")
 
-    @staticmethod
-    def get_button_input() -> int:
+    def get_button_input(self) -> int:
         """Get user input for button press.
 
         :return: The number of the button to be pressed.
@@ -43,6 +42,7 @@ class ButtonSimulator:
             if 1 <= number <= 6:
                 break
             print("\nPlease enter a number in the range [1, 6].")
+            self.display_buttons()
 
         return number
 
