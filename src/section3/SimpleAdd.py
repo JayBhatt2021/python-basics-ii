@@ -25,8 +25,8 @@ class SimpleAdd:
         try:
             first_operand, second_operand = self.user_nums[0], self.user_nums[1]
             print(
-                f"The sum of {first_operand} and {second_operand} is "
-                f"{first_operand + second_operand}."
+                f"The sum of {first_operand:.2f} and {second_operand:.2f} is "
+                f"{(first_operand + second_operand):.2f}."
             )
         except Exception as e:
             print(f'\nAn unexpected error occurred: "{e}".')
