@@ -1,19 +1,13 @@
 class SimpleAdd:
-    """A class representing a button simulator."""
+    """A class representing a simple addition calculator."""
 
     def __init__(self) -> None:
-        """Initialize the button simulator.
-
-        :return: None
-        """
+        """Initialize the simple addition calculator."""
         self.text_field_num = 1
         self.user_nums = []
 
     def enter_number(self) -> None:
-        """Enter numbers into the calculator.
-
-        :return: None
-        """
+        """Enter a number into the calculator."""
         while True:
             try:
                 print(f"Text Field #{self.text_field_num}")
@@ -24,28 +18,22 @@ class SimpleAdd:
                 print()
                 break
             except ValueError:
-                print("\nInvalid input. Please enter a valid number.\n")
+                print("\nInvalid input. Please enter a valid number.")
 
     def calculate_sum(self) -> None:
-        """Calculate the expression entered into the calculator.
-
-        :return: None
-        """
+        """Calculate the sum of the two entered numbers."""
         try:
             first_operand, second_operand = self.user_nums[0], self.user_nums[1]
             print(
-                f'The sum of {first_operand} and {second_operand} is '
-                f'{first_operand + second_operand}.'
+                f"The sum of {first_operand} and {second_operand} is "
+                f"{first_operand + second_operand}."
             )
         except Exception as e:
-            print(f'An unexpected error occurred: "{e}".')
+            print(f'\nAn unexpected error occurred: "{e}".')
 
 
 def main() -> None:
-    """Run the calculator program.
-
-    :return: None
-    """
+    """Run the simple addition calculator program."""
     try:
         simple_add = SimpleAdd()
         simple_add.enter_number()
@@ -54,7 +42,7 @@ def main() -> None:
     except KeyboardInterrupt:
         print("\n\nProgram terminated by user.")
     except Exception as e:
-        print(f'An unexpected error occurred: "{e}".')
+        print(f'\nAn unexpected error occurred: "{e}".')
 
 
 if __name__ == "__main__":
