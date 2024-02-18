@@ -45,7 +45,7 @@ class Calculator:
                 f'"{eval(expression_str):.2f}".'
             )
         except Exception as e:
-            print(f'An error occurred: "{e}".')
+            print(f'\nAn error occurred: "{e}".')
 
 
 def main() -> None:
