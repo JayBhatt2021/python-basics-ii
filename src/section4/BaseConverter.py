@@ -80,11 +80,23 @@ class BaseConverter:
 
 def main() -> None:
     """Run the base converter program."""
-    inputted_nums = [753, 753, 9068, 692, 97867564534231201]
-    inputted_bases = [8, 16, 20, 2, 36]
+    try:
+        input_num = int(input("Enter an integer: "))
 
-    for input_num, base in zip(inputted_nums, inputted_bases):
+        while True:
+            base = int(input("Enter the base to convert to: "))
+            if 2 <= base <= 36:
+                print()
+                break
+            print("\nThe base must be between 2 and 36, inclusive.")
+
         print(BaseConverter(input_num, base))
+    except ValueError:
+        print("\nPlease enter a valid integer! Exiting program...")
+    except KeyboardInterrupt:
+        print("\n\nProgram terminated by user.")
+    except Exception as e:
+        print(f'\nAn unexpected error occurred: "{e}".')
 
 
 if __name__ == "__main__":
