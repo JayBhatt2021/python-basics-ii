@@ -1,34 +1,33 @@
 def is_palindrome(string: str) -> bool:
-    """Count the number of vowels in a given string.
+    """Check if a string is a palindrome.
 
     :param string: The input string.
-    :return: The count of vowels in the string.
+    :return: True if the string is a palindrome, False otherwise.
     """
-    if not string:
+    # Returns True if the string is empty or has only one character
+    if len(string) <= 1:
         return True
 
+    # Checks if the first and last characters are not equal
     if string[0] != string[-1]:
         return False
 
+    # Recursively checks if the substring excluding the first and last
+    # characters is a palindrome
     return is_palindrome(string[1:-1])
 
 
 def main() -> None:
-    """Run the program to count vowels in a string entered by the user.
-
-    :return: None
-    """
+    """Run the program to check if a string is a palindrome."""
     try:
         input_str = input("Enter a string: ")
-        print(
-            f'\n"{input_str}" is'
-            f'{" " if is_palindrome(input_str.lower()) else " not "}a '
-            f'palindrome.'
-        )
+        is_palindrome_str = "a palindrome" \
+            if is_palindrome(input_str.lower()) else "not a palindrome"
+        print(f'\n"{input_str}" is {is_palindrome_str}.')
     except KeyboardInterrupt:
         print("\n\nProgram terminated by user.")
     except Exception as e:
-        print(f'An unexpected error occurred: "{e}".')
+        print(f'\nAn unexpected error occurred: "{e}".')
 
 
 if __name__ == "__main__":
