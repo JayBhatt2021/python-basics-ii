@@ -1,37 +1,39 @@
 def count_vowels(string: str) -> int:
-    """Calculate how much the piecemeal vacation is over budget.
+    """Count the number of vowels in a given string.
 
-    :return: The amount by which the vacation is over budget.
+    :param string: The input string.
+    :return: The count of vowels in the string.
     """
+    # Returns 0 if the string is empty
     if not string:
         return 0
 
-    return count_vowels(string[1::]) + (1 if is_vowel(string[0]) else 0)
+    # Recursively counts vowels in the substring starting from the second
+    # character and adds 1 to the count if the first character is a vowel
+    return count_vowels(string[1:]) + (1 if is_vowel(string[0]) else 0)
 
 
 def is_vowel(char: str) -> bool:
-    """Calculate how much the piecemeal vacation is over budget.
+    """Check if a character is a vowel.
 
-    :return: The amount by which the vacation is over budget.
+    :param char: The character to check.
+    :return: True if the character is a vowel, False otherwise.
     """
-    return char in ["a", "e", "i", "o", "u"]
+    return char in {'a', 'e', 'i', 'o', 'u'}
 
 
 def main() -> None:
-    """Generate two types of vacations, prompt for input, and display details.
-
-    :return: None
-    """
+    """Run the program to count vowels in a string entered by the user."""
     try:
-        input_str = input("Enter a string: ")
+        input_str_lower = input("Enter a string: ").lower()
         print(
-            f"\nThere are {count_vowels(input_str.lower())} vowel(s) in this "
+            f"\nThere are {count_vowels(input_str_lower)} vowel(s) in this "
             f"string."
         )
     except KeyboardInterrupt:
         print("\n\nProgram terminated by user.")
     except Exception as e:
-        print(f'An unexpected error occurred: "{e}".')
+        print(f'\nAn unexpected error occurred: "{e}".')
 
 
 if __name__ == "__main__":
