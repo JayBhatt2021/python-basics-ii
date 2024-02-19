@@ -3,15 +3,20 @@ from typing import Deque, List
 
 
 class ClothingItem:
-    """Replace this."""
+    """Represents an item of clothing."""
 
-    def __init__(self, name: str, color: str,
-                 washed_at_high_temp: bool) -> None:
-        """
+    def __init__(
+        self,
+        name: str,
+        color: str,
+        washed_at_high_temp: bool,
+    ) -> None:
+        """Initialize a clothing item.
 
-        :param name:
-        :param color:
-        :param washed_at_high_temp:
+        :param name: The name of the clothing item.
+        :param color: The color of the clothing item.
+        :param washed_at_high_temp: Whether the clothing item can be washed at
+                                    high temperature.
         """
         self.name = name
         self.color = color
@@ -19,47 +24,48 @@ class ClothingItem:
 
 
 class ClothesStack:
-    def __init__(self):
-        """
+    """Represents a stack of clothing items."""
 
-        """
+    def __init__(self) -> None:
+        """Initialize the clothes stack."""
         self.clothes_stack: List[ClothingItem] = []
 
     def push(self, clothing_item: ClothingItem) -> None:
-        """
+        """Push a clothing item onto the stack.
 
-        :param clothing_item:
+        :param clothing_item: The clothing item to push.
         """
         if len(self.clothes_stack) < 20:
             self.clothes_stack.append(clothing_item)
+            return
 
         raise IndexError("The stack is full!")
 
     def pop(self) -> ClothingItem:
-        """
+        """Pop a clothing item from the stack.
 
-        :return:
+        :return: The popped clothing item.
         """
-        if len(self.clothes_stack) > 0:
+        if self.clothes_stack:
             return self.clothes_stack.pop()
 
         raise IndexError("You cannot pop from an empty stack!")
 
     def peek(self) -> ClothingItem:
-        """
+        """Get the top clothing item from the stack without removing it.
 
-        :return:
+        :return: The top clothing item.
         """
-        if len(self.clothes_stack) > 0:
+        if self.clothes_stack:
             return self.clothes_stack[-1]
 
         raise IndexError("The stack is empty!")
 
     def get_clothes_of_color(self, color: str) -> List[ClothingItem]:
-        """
+        """Get all clothing items of a specific color.
 
-        :param color:
-        :return:
+        :param color: The color of the clothing items to retrieve.
+        :return: A list of clothing items with the specified color.
         """
         return [
             clothing_item for clothing_item in self.clothes_stack
@@ -67,28 +73,33 @@ class ClothesStack:
         ]
 
     def get_num_of_clothes_that_can_be_washed_at_high_temperatures(self) -> int:
-        """
+        """Get the number of clothing items that can be washed at high
+        temperatures.
 
-        :return:
+        :return: The number of clothing items that can be washed at high
+                 temperatures.
         """
         return sum(
-            [
-                1 for clothing_item in self.clothes_stack
-                if clothing_item.washed_at_high_temp
-            ]
+            1 for clothing_item in self.clothes_stack
+            if clothing_item.washed_at_high_temp
         )
 
 
 class Food:
-    """Replace this."""
+    """Represents a food item."""
 
-    def __init__(self, name: str, calories_per_serving: float,
-                 servings_num: float) -> None:
-        """
+    def __init__(
+        self,
+        name: str,
+        calories_per_serving: float,
+        servings_num: float
+    ) -> None:
+        """Initialize a food item.
 
-        :param name:
-        :param calories_per_serving:
-        :param servings_num:
+        :param name: The name of the food item.
+        :param calories_per_serving: The number of calories per serving of the
+                                     food item.
+        :param servings_num: The number of servings of the food item.
         """
         self.name = name
         self.calories_per_serving = calories_per_serving
@@ -96,52 +107,46 @@ class Food:
 
 
 class FoodQueue:
-    """Replace this."""
+    """Represents a queue of food items."""
 
     def __init__(self) -> None:
-        """
-
-        """
+        """Initialize the food queue."""
         self.food_queue: Deque[Food] = deque()
 
     def enqueue(self, food: Food) -> None:
-        """
+        """Enqueue a food item into the queue.
 
-        :param food:
-        :return:
+        :param food: The food item to enqueue.
         """
         if len(self.food_queue) < 20:
             self.food_queue.append(food)
+            return
 
         raise IndexError("The queue is full!")
 
     def dequeue(self) -> Food:
-        """
+        """Dequeue a food item from the queue.
 
-        :param food:
-        :return:
+        :return: The dequeued food item.
         """
-        if len(self.food_queue) > 0:
+        if self.food_queue:
             return self.food_queue.popleft()
 
         raise IndexError("You cannot dequeue from an empty queue!")
 
     def peek(self) -> Food:
-        """
+        """Get the first food item in the queue without removing it.
 
-        :return:
+        :return: The first food item in the queue.
         """
-        if len(self.food_queue) > 0:
+        if self.food_queue:
             return self.food_queue[0]
 
         raise IndexError("The queue is empty!")
 
 
 def main() -> None:
-    """
-
-    :return:
-    """
+    """The main function."""
     pass
 
 
