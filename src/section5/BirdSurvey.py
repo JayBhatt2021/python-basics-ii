@@ -1,10 +1,10 @@
 class Bird:
-    """A class representing a simple calculator."""
+    """A class representing a bird."""
 
     def __init__(self, species_name: str) -> None:
-        """Initialize the calculator.
+        """Initialize a bird.
 
-        :return: None
+        :param species_name: The name of the bird species.
         """
         self.species_name = species_name
         self.count = 1
@@ -12,124 +12,122 @@ class Bird:
 
 
 class BirdSurvey:
-    """A class representing a simple calculator."""
+    """A class representing a bird survey."""
 
-    def __init__(self, head: Bird = None) -> None:
-        """Initialize the calculator.
-
-        :return: None
-        """
-        self.head = head
+    def __init__(self) -> None:
+        """Initialize the bird survey."""
+        self.head = None
         self.length = 0
 
-    def append(self, bird_name: str) -> None:
-        """Enter numbers into the calculator.
+    def append(self, species_name: str) -> None:
+        """Add a bird to the survey or increment its count if already present.
 
-        :return: None
+        :param species_name: The name of the bird species to add.
         """
+        new_node = Bird(species_name)
+
+        # Initializes the head if the linked list is empty
         if not self.head:
-            self.head = Bird(bird_name)
+            self.head = new_node
             self.length += 1
             return
 
-        current = self.head
-
-        while current.next:
-            if current.species_name == bird_name:
+        previous, current = None, self.head
+        while current:
+            # Increments the count of the specified bird if it's already present
+            if current.species_name == species_name:
                 current.count += 1
                 return
 
+            previous = current
             current = current.next
 
-        current.next = Bird(bird_name)
+        # Adds a new bird to the end of the linked list
+        previous.next = new_node
         self.length += 1
 
-    def delete(self, bird_name: str) -> None:
-        """Enter numbers into the calculator.
+    def delete(self, species_name: str) -> None:
+        """Delete a bird species from the survey.
 
-        :return: None
+        :param species_name: The name of the bird species to delete.
         """
+        # Exits immediately if the linked list is empty
         if self.length == 0:
             return
 
-        if self.head.species_name == bird_name:
+        # Moves the head to the next bird if the species to delete is the head
+        if self.head.species_name == species_name:
             self.head = self.head.next
             self.length -= 1
             return
 
-        previous = None
-        current = self.head
-
+        previous, current = None, self.head
         while current:
-            if current.species_name == bird_name:
+            # Removes the current bird species if it is the one to delete
+            if current.species_name == species_name:
                 previous.next = current.next
                 return
+
+            # Updates the previous and current pointers
             previous = current
             current = current.next
 
-    def get_bird_count(self, bird_name: str) -> int:
-        """
+    def get_bird_count(self, species_name: str) -> int:
+        """Get the count of a specific bird species in the survey.
 
-        :param bird_name:
-        :return:
+        :param species_name: The name of the bird species to get the count of.
+        :return: The count of the specified bird species.
         """
         current = self.head
-
         while current:
-            if current.species_name == bird_name:
+            # Returns the count if the current bird matches the given species
+            if current.species_name == species_name:
                 return current.count
 
             current = current.next
 
+        # Returns 0 if the given species is not found
         return 0
 
     def print_survey(self) -> None:
-        """
-
-        :return:
-        """
+        """Print the bird survey."""
         current = self.head
         while current:
-            print(f"Name = {current.species_name}, Count = {current.count}")
+            print(f"Species: {current.species_name}, Count: {current.count}")
             current = current.next
 
 
 def main() -> None:
-    """Run the calculator program.
-
-    :return: None
-    """
-    # You will write a program that uses BirdSurvey to record the data from a recent
-    # bird survey.  Use a loop to read bird names until done is entered.  Illustrate
-    # the use of each of the methods mentioned above, with the last being a Report
-    # of all the species of birds entered and the count for each species.
+    """Run the bird survey program."""
     try:
         bird_survey = BirdSurvey()
-        bird_total = int(
-            input(
-                "How many different types of birds do you want input in the "
-                "survey? "
-            )
-        )
 
+        # Handles BirdSurvey addition
+        bird_total = int(
+            input("How many birds do you want to input in the survey? ")
+        )
         for i in range(1, bird_total + 1):
             species_name = input(f"Enter the species name of bird #{i}: ")
             bird_survey.append(species_name)
 
+        # Handles BirdSurvey accession
         inputted_species = input(
-            "\nEnter the species name of the bird you want to see the count "
-            "of: "
+            "\nEnter the species name of the bird you want to see the count of:"
+            " "
         )
         inputted_species_count = bird_survey.get_bird_count(inputted_species)
-        print(f"There is(are) {inputted_species_count} {inputted_species}(s).")
+        print(f"There are {inputted_species_count} {inputted_species}(s).")
 
-        print("\nBird Survey (Before Deletion): ")
+        # Handles BirdSurvey printing and deletion
+        print("\nBird Survey (Before Deletion):")
         bird_survey.print_survey()
+
         deleted_species = input(
-            "\nEnter the species name of the bird you want to omit: "
+            "\nEnter the species name of the bird(s) you want to omit: "
         )
         bird_survey.delete(deleted_species)
-        print("\nBird Survey (After Deletion): ")
+
+        print("\nBird Survey (After Deletion):")
         bird_survey.print_survey()
     except ValueError:
         print("\nThe bird count must be a valid integer. Exiting program...")
