@@ -5,16 +5,17 @@ FILES_DIR_PATH = "./files/"
 
 
 def determine_program_termination(file: str) -> str:
-    """
+    """Determine whether to abort or continue the program.
 
-    :param file:
-    :return:
+    :param file: The name of the file to check.
+    :return: The action to take: "abort", "rename", or "correct".
     """
     if not verify_file_existence_and_readability(file):
         print("\nThis file does not exist or is not readable.")
         print("Options:\n1) Abort Program\n2) Enter New File Name")
 
-        if int(input("Choose an option: ")) == 1:
+        choice = int(input("Choose an option: "))
+        if choice == 1:
             return "abort"
         else:
             print()
@@ -24,17 +25,17 @@ def determine_program_termination(file: str) -> str:
 
 
 def verify_file_existence_and_readability(file: str) -> bool:
-    """Push a clothing item onto the stack.
+    """Verify the existence and readability of a file.
 
-    :param file: The clothing item to push.
-    :return: replace
+    :param file: The name of the file to verify.
+    :return: True if the file exists and is readable, False otherwise.
     """
-    file_path = f"{FILES_DIR_PATH}{file}"
+    file_path = os.path.join(FILES_DIR_PATH, file)
     return os.path.exists(file_path) and os.access(file_path, os.R_OK)
 
 
 def main() -> None:
-    """The main function."""
+    """Copy contents from one file to another."""
     try:
         # Original File
         while True:
@@ -62,15 +63,15 @@ def main() -> None:
                     '("yes" or "no")?: '
                 )
 
-                if overwrite_str.lower() == "no":
+                if overwrite_str.lower() != "yes":
                     continue
             break
 
         # Copies contents of the original file to the copy file
-        with open(f"{FILES_DIR_PATH}{original_file}", "r") as o_file:
+        with open(os.path.join(FILES_DIR_PATH, original_file), "r") as o_file:
             original_file_lines = o_file.readlines()
 
-        with open(f"{FILES_DIR_PATH}{copy_file}", "w") as c_file:
+        with open(os.path.join(FILES_DIR_PATH, copy_file), "w") as c_file:
             for line in original_file_lines:
                 c_file.write(f"{line.strip()}\n")
 
