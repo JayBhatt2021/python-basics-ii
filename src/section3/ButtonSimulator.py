@@ -65,7 +65,7 @@ def main() -> None:
     except KeyboardInterrupt:
         print("\n\nProgram terminated by user.")
     except Exception as e:
-        print(f'An unexpected error occurred: "{e}".')
+        print(f'\nAn unexpected error occurred: "{e}".')
 
 
 if __name__ == "__main__":
