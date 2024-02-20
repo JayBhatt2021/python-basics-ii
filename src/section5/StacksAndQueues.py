@@ -16,7 +16,7 @@ class ClothingItem:
         :param name: The name of the clothing item.
         :param color: The color of the clothing item.
         :param washed_at_high_temp: Whether the clothing item can be washed at
-                                    high temperature.
+                                    high temperatures.
         """
         self.name = name
         self.color = color
@@ -50,7 +50,7 @@ class ClothesStack:
             self.clothes_stack.append(clothing_item)
             return
 
-        raise IndexError("The stack is full!")
+        raise IndexError("The clothes stack is full!")
 
     def pop(self) -> ClothingItem:
         """Pop a clothing item from the stack.
@@ -60,7 +60,7 @@ class ClothesStack:
         if self.clothes_stack:
             return self.clothes_stack.pop()
 
-        raise IndexError("You cannot pop from an empty stack!")
+        raise IndexError("You cannot pop from an empty clothes stack!")
 
     def peek(self) -> ClothingItem:
         """Get the top clothing item from the stack without removing it.
@@ -70,10 +70,15 @@ class ClothesStack:
         if self.clothes_stack:
             return self.clothes_stack[-1]
 
-        raise IndexError("The stack is empty!")
+        raise IndexError("The clothes stack is empty!")
 
     def print_clothing_items(self) -> None:
         """Print all clothing items."""
+        if not self.clothes_stack:
+            print("\nThere are no clothing items in the clothes stack!\n")
+            return
+
+        print("\nAll Clothing Items:")
         for i, clothing_item in enumerate(self.clothes_stack, start=1):
             print(f"Clothing Item #{i}")
             print(clothing_item)
@@ -151,7 +156,7 @@ class FoodQueue:
             self.food_queue.append(food)
             return
 
-        raise IndexError("The queue is full!")
+        raise IndexError("The food queue is full!")
 
     def dequeue(self) -> Food:
         """Dequeue a food item from the queue.
@@ -161,7 +166,7 @@ class FoodQueue:
         if self.food_queue:
             return self.food_queue.popleft()
 
-        raise IndexError("You cannot dequeue from an empty queue!")
+        raise IndexError("You cannot dequeue from an empty food queue!")
 
     def peek(self) -> Food:
         """Get the first food item in the queue without removing it.
@@ -171,13 +176,18 @@ class FoodQueue:
         if self.food_queue:
             return self.food_queue[0]
 
-        raise IndexError("The queue is empty!")
+        raise IndexError("The food queue is empty!")
 
     def print_food_items(self) -> None:
         """Print all food items."""
-        for i, item in enumerate(self.food_queue, start=1):
+        if not self.food_queue:
+            print("\nThere are no food items in the food queue!\n")
+            return
+
+        print("\nAll Food Items:")
+        for i, food_item in enumerate(self.food_queue, start=1):
             print(f"Food Item #{i}")
-            print(item)
+            print(food_item)
             print()
 
     def calculate_average_calories_per_serving(self) -> float:
@@ -199,12 +209,12 @@ class FoodQueue:
         :return: The food item with the highest total calories.
         """
         if not self.food_queue:
-            raise ValueError("The queue is empty!")
+            return None
 
         return max(
             self.food_queue,
             key=lambda food_item:
-                food_item.calories_per_serving * food_item.servings_num,
+            food_item.calories_per_serving * food_item.servings_num,
         )
 
 
@@ -214,12 +224,13 @@ def main() -> None:
         # ClothesStack Methods
         stack_size = int(
             input(
-                "How many clothing items do you want to push to the stack (max "
-                "is 20)?: "
+                "How many clothing items do you want to push to the clothes "
+                "stack (max is 20)?: "
             )
         )
         stack_size = min(stack_size, 20)
         clothes_stack = ClothesStack()
+
         for i in range(1, stack_size + 1):
             print(f"Clothing Item #{i}")
             name = input("Enter the name of the clothing item: ")
@@ -234,83 +245,100 @@ def main() -> None:
 
             clothes_stack.push(ClothingItem(name, color, washed_at_high_temp))
 
-        print("The following clothing item has been popped from the stack:")
-        print(clothes_stack.pop())
+        if stack_size:
+            print(
+                "The following clothing item has been popped from the clothes "
+                "stack:"
+            )
+            print(clothes_stack.pop())
 
-        print("\nThe following clothing item is on the top of the stack:")
-        print(clothes_stack.peek())
+            if stack_size > 1:
+                print(
+                    "\nThe following clothing item is on the top of the "
+                    "clothes stack:"
+                )
+                print(clothes_stack.peek())
 
-        print("\nAll Clothing Items:")
-        print(clothes_stack.print_clothing_items())
+            clothes_stack.print_clothing_items()
 
-        color = input(
-            "\nWhat is the color of the clothing item(s) do you want to "
-            "retrieve?: "
-        )
-        color_clothes = clothes_stack.get_clothes_of_color(color)
-        print(f'All Clothing Items of Color "{color}":')
-        for i, clothing_item in enumerate(color_clothes, start=1):
-            print(f"Clothing Item #{i}")
-            print(clothing_item)
-            print()
+            color = input(
+                "What is the color of the clothing item(s) you want to "
+                "retrieve?: "
+            )
+            color_clothes = clothes_stack.get_clothes_of_color(color)
+            if color_clothes:
+                print(f'All Clothing Items of Color "{color}":')
+                for i, clothing_item in enumerate(color_clothes, start=1):
+                    print(f"Clothing Item #{i}")
+                    print(clothing_item)
+                    print()
+            else:
+                print(f'\nNo clothing items of color "{color}" exists.\n')
 
-        print(
-            f"There are "
-            f"{clothes_stack.get_count_of_high_temp_washable_clothes()} "
-            f"clothing item(s) that can be washed at high temperatures."
-        )
+            print(
+                f"There are "
+                f"{clothes_stack.get_count_of_high_temp_washable_clothes()} "
+                f"clothing item(s) that can be washed at high temperatures."
+            )
+        else:
+            print("\nNo stack operations will be performed.")
 
         # FoodQueue Methods
         queue_size = int(
             input(
-                "\nHow many food items do you want to enqueue to the queue (max"
-                " is 20)?: "
+                "\nHow many food items do you want to enqueue to the food "
+                "queue (max is 20)?: "
             )
         )
         queue_size = min(queue_size, 20)
         food_queue = FoodQueue()
+
         for i in range(1, queue_size + 1):
             print(f"Food Item #{i}")
             name = input("Enter the name of the food item: ")
             calories_per_serving = float(
-                input(
-                    "Enter the number of calories per serving of the food item"
-                    ": "
-                )
+                input("Enter the number of calories per serving: ")
             )
-            servings_num = float(
-                input(
-                    "Enter the number of servings of the food item: "
-                )
-            )
+            servings_num = float(input("Enter the number of servings: "))
             print()
 
             food_queue.enqueue(Food(name, calories_per_serving, servings_num))
 
-        print("The following food item has been dequeued from the queue:")
-        print(food_queue.dequeue())
+        if queue_size:
+            print(
+                "The following food item has been dequeued from the food queue:"
+            )
+            print(food_queue.dequeue())
 
-        print("\nThe following food item is in the front of the queue:")
-        print(food_queue.peek())
+            if queue_size > 1:
+                print(
+                    "\nThe following food item is in the front of the food "
+                    "queue:"
+                )
+                print(food_queue.peek())
 
-        print("\nAll Food Items:")
-        print(food_queue.print_food_items())
+            food_queue.print_food_items()
 
-        print(
-            f"\nThe average calories per serving of all food items is "
-            f"{food_queue.calculate_average_calories_per_serving()} calories "
-            f"per serving."
-        )
+            print(
+                f"The average calories per serving of all food items is "
+                f"{food_queue.calculate_average_calories_per_serving():.2f} "
+                f"calories per serving."
+            )
 
-        max_cal_food = food_queue.obtain_food_with_highest_total_calories()
-        print(
-            f"\nThe following food item contains the highest total calories ("
-            f"{max_cal_food.calories_per_serving * max_cal_food.servings_num} "
-            f"calories):"
-        )
-        print(max_cal_food)
+            max_cal = food_queue.obtain_food_with_highest_total_calories()
+            if max_cal:
+                total_cal = max_cal.calories_per_serving * max_cal.servings_num
+                print(
+                    f"\nThe following food item contains the highest total "
+                    f"calories ({total_cal:.2f} calories):"
+                )
+                print(max_cal)
+            else:
+                print("\nNo food items in the food queue.")
+        else:
+            print("\nNo queue operations will be performed.")
     except ValueError:
-        print("\nThe input must be valid! Exiting program...")
+        print("\nThe input must be a valid number! Exiting program...")
     except KeyboardInterrupt:
         print("\n\nProgram terminated by user.")
 
