@@ -245,7 +245,7 @@ def main() -> None:
 
             clothes_stack.push(ClothingItem(name, color, washed_at_high_temp))
 
-        if stack_size:
+        if stack_size > 0:
             print(
                 "The following clothing item has been popped from the clothes "
                 "stack:"
@@ -304,7 +304,7 @@ def main() -> None:
 
             food_queue.enqueue(Food(name, calories_per_serving, servings_num))
 
-        if queue_size:
+        if queue_size > 0:
             print(
                 "The following food item has been dequeued from the food queue:"
             )
