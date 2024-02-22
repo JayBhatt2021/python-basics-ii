@@ -54,6 +54,8 @@ def convert_hours(hours: int) -> str:
     """
     if hours > 12:
         hours %= 12
+    elif hours == 0:
+        hours = 12
     return f"{hours:02d}"
 
 
