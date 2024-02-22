@@ -41,7 +41,8 @@ def validate_time_format(original_time: str) -> None:
     """
     if not bool(re.match(r"^(?:[01]\d|2[0-3]):[0-5]\d$", original_time)):
         raise TimeFormatException(
-            'The 24-hour time string must follow the following format: "HH:MM".'
+            'The 24-hour time string must be in the format "HH:MM" and '
+            'represent a valid time.'
         )
 
 
