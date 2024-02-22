@@ -1,42 +1,30 @@
+import re
+
+
 class TimeFormatException(Exception):
-    """Replace this."""
+    """Exception raised for invalid time format."""
 
     def __init__(self, message: str = "The time format is incorrect.") -> None:
+        """Initialize an instance of TimeFormatException.
+
+        :param message: The error message.
+        """
         super().__init__(message)
 
 
 def convert_time(original_time: str) -> str:
-    """Verify the existence and readability of a file.
+    """Convert time from 24-hour to 12-hour format.
 
-    :param file: The name of the file to verify.
-    :return: True if the file exists and is readable, False otherwise.
+    :param original_time: The time in 24-hour format (HH:MM).
+    :return: The time converted to 12-hour format (HH:MM AM/PM).
+    :raises TimeFormatException: If the time format is invalid.
     """
-    if len(original_time) != 5:
-        raise TimeFormatException(
-            "The length of the time string must be five characters long!"
-        )
-
-    if ":" not in original_time:
-        raise TimeFormatException(
-            'The time string must follow the following format: "HH:MM".'
-        )
-
+    validate_time_format(original_time)
     original_hours_str, original_minutes_str = original_time.split(":")
     original_hours, original_minutes = (
         int(original_hours_str),
         int(original_minutes_str),
     )
-
-    if original_hours < 0 or original_hours > 23:
-        raise TimeFormatException(
-            "The hours in the time string must be between 0 and 23, inclusive."
-        )
-
-    if original_minutes < 0 or original_minutes > 59:
-        raise TimeFormatException(
-            "The minutes in the time string must be between 0 and 59, "
-            "inclusive."
-        )
 
     converted_hours = convert_hours(original_hours)
     converted_minutes = convert_minutes(original_minutes)
@@ -45,47 +33,49 @@ def convert_time(original_time: str) -> str:
     return f"{converted_hours}:{converted_minutes} {am_pm_str}"
 
 
-def convert_hours(hours: int) -> str:
-    """Verify the existence and readability of a file.
+def validate_time_format(original_time: str) -> None:
+    """Validate the format of the 24-hour time string.
 
-    :param file: The name of the file to verify.
-    :return: True if the file exists and is readable, False otherwise.
+    :param original_time: The 24-hour time string to validate.
+    :raises TimeFormatException: If the time format is invalid.
+    """
+    if not bool(re.match(r"^(?:[01]\d|2[0-3]):[0-5]\d$", original_time)):
+        raise TimeFormatException(
+            'The 24-hour time string must follow the following format: "HH:MM".'
+        )
+
+
+def convert_hours(hours: int) -> str:
+    """Convert hours to 12-hour format.
+
+    :param hours: The hours to convert.
+    :return: The hours in 12-hour format.
     """
     if hours > 12:
         hours %= 12
-
-    if hours < 10:
-        return f"0{hours}"
-
-    return f"{hours}"
+    return f"{hours:02d}"
 
 
 def convert_minutes(minutes: int) -> str:
-    """Verify the existence and readability of a file.
+    """Convert minutes to 12-hour format.
 
-    :param file: The name of the file to verify.
-    :return: True if the file exists and is readable, False otherwise.
+    :param minutes: The minutes to convert.
+    :return: The minutes in 12-hour format.
     """
-    if minutes < 10:
-        return f"0{minutes}"
-
-    return f"{minutes}"
+    return f"{minutes:02d}"
 
 
 def determine_am_or_pm(hours: int) -> str:
-    """Verify the existence and readability of a file.
+    """Determine whether it's AM or PM.
 
-    :param file: The name of the file to verify.
-    :return: True if the file exists and is readable, False otherwise.
+    :param hours: The hours of the time.
+    :return: "AM" if before noon, otherwise "PM".
     """
-    if hours // 12 == 0:
-        return "AM"
-
-    return "PM"
+    return "AM" if hours < 12 else "PM"
 
 
 def main() -> None:
-    """Copy contents from one file to another."""
+    """Main function to convert time."""
     try:
         while True:
             original_time = input("Enter the time in 24-hour notation: ")
@@ -102,8 +92,9 @@ def main() -> None:
             choice = input(
                 '\nDo you want to convert more 24-hour times ("yes" or "no")?: '
             )
-            if choice.lower() == "no":
+            if choice.lower() != "yes":
                 break
+            print()
 
         print("\nThank you for using the TimeConverter program!")
     except KeyboardInterrupt:
