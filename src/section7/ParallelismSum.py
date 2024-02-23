@@ -6,10 +6,10 @@ from typing import List
 
 
 def generate_random_list(
-        lower_bound: int,
-        upper_bound: int,
-        length: int,
-    ) -> List[int]:
+    lower_bound: int,
+    upper_bound: int,
+    length: int,
+) -> List[int]:
     """Generate a random list of integers within a specified range.
 
     :param lower_bound: The lower bound of the range.
@@ -21,40 +21,46 @@ def generate_random_list(
 
 
 def perform_parallel_sum(num_list: List[int]) -> int:
-    """Sort a list of integers in parallel using multiple processes.
+    """Calculate the sum of integers in a list in parallel using multiple
+    threads.
 
-    :param num_list: The list of integers to sort.
-    :return: The sorted list of integers.
+    :param num_list: The list of integers to sum.
+    :return: The sum of integers in the list.
     """
+    # Gets the length of num_list and determines the number of threads to use
+    n, num_threads = len(num_list), multiprocessing.cpu_count()
+
     # Divides the list into smaller chunks
-    n = len(num_list)
-    process_count = multiprocessing.cpu_count()
-    chunk_size = n // process_count
+    chunk_size = n // num_threads
     chunks = [num_list[i:i + chunk_size] for i in range(0, n, chunk_size)]
 
-    # Initializes ThreadPoolExecutor with max_workers set to number of chunks
-    with concurrent.futures.ThreadPoolExecutor(max_workers=len(chunks)) as executor:
+    # Initializes ThreadPoolExecutor with max_workers set to num_threads
+    with (concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as
+          executor):
         # Submits tasks to the executor
         futures = [executor.submit(sum_chunk, chunk) for chunk in chunks]
 
         # Gets results from the futures
-        results = [future.result() for future in concurrent.futures.as_completed(futures)]
+        results = [
+            future.result()
+            for future in concurrent.futures.as_completed(futures)
+        ]
 
-    # Combines results from different chunks
+    # Adds the results from the futures
     return sum(results)
 
 
 def sum_chunk(chunk: List[int]) -> int:
-    """Sort a list of integers in parallel using multiple processes.
+    """Calculate the sum of integers in a chunk of a list.
 
-    :param num_list: The list of integers to sort.
-    :return: The sorted list of integers.
+    :param chunk: The chunk of integers to sum.
+    :return: The sum of integers in the chunk.
     """
     return sum(chunk)
 
 
 def main() -> None:
-    """Main function to compare bubble sort and parallel sort."""
+    """Main function to calculate the sum of integers in parallel."""
     try:
         # Generates a random list
         random_list = generate_random_list(-100_000, 100_000, 100_000)
